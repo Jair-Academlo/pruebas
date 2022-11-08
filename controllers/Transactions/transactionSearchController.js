@@ -2,67 +2,27 @@ const createHttpError = require("http-errors");
 const { Transaction } = require("../../database/models");
 const { endpointResponse } = require("../../helpers/success");
 const { catchAsync } = require("../../helpers/catchAsync");
+const { ErrorObject } = require("../../helpers/error");
 
 const { Op } = require("sequelize");
 const { paginate } = require("../../database/paginate/paginate");
 
 module.exports = {
-  /*   getAllTransactions: catchAsync(async (req, res, next) => {
+  listTransactions: catchAsync(async (req, res, next) => {
     try {
-      const response = await Transaction.findAll();
-      endpointResponse({
-        res,
-        message: 'Transactions obtained',
-        body: response,
-      })
-    } catch (error) {
-      const httpError = createHttpError(
-        error.statusCode,
-        `[Error obtaining TransactionSearch] - [transactionSearchController - GET]: ${error.message}`, 
-      )
-      next(httpError)
-    }
-  }),
-} */
+      //get the query params
 
-  /* get: catchAsync(async (req, res, next) => {
-    try {
-      const { page, limit = 10 } = req.query;
-
-      let options = {
-        limit,
-        offset: +page * limit,
-      };
-
-      const { count, rows } = await Transaction.findAndCountAll(options);
-
-      endpointResponse({
-        res,
-        message: "Transactions retrieved successfully",
-        body: {
-          total: count,
-          transactions: rows,
-        },
-      });
-    } catch (error) {
-      const httpError = createHttpError(
-        error.statusCode,
-        `[Error retrieving transactions] - [transactioons - GET]: ${error.message}`
-      );
-      next(httpError);
-    }
-  }),
-}; */
-
-  listTransactions: async (req, res) => {
-    try {
       const {
-        q,
-        page = 1,
+        q = 0,
+        page = 0,
         limit = 10,
         order_by,
         order_direction = "asc",
       } = req.query;
+
+      if (q === page) {
+        throw new ErrorObject("the params query not found", 404);
+      }
 
       let search = {};
       let order = [];
@@ -73,9 +33,13 @@ module.exports = {
         };
       }
 
+      //add the order parameters to the order
+
       if (order_by && order_direction) {
         order.push([order_by, order_direction]);
       }
+
+      // transform function that can be passed to the paginate method
 
       const transform = (records) => {
         return records.map((Transaction) => {
@@ -84,6 +48,8 @@ module.exports = {
           };
         });
       };
+
+      // paginate method that takes in the model, limit, search object, order and transform
 
       const transactions = await paginate(
         Transaction,
@@ -94,13 +60,17 @@ module.exports = {
         transform
       );
 
-      return res.status(200).json({
-        success: true,
-        message: "operacion exitosa",
-        code: transactions,
+      endpointResponse({
+        res,
+        message: "Transactions retrieved successfully",
+        body: transactions,
       });
     } catch (error) {
-      console.log(error);
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving transactions] - [transactions - GET]: ${error.message}`
+      );
+      next(httpError);
     }
-  },
+  }),
 };
