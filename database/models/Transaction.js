@@ -31,6 +31,22 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Transaction",
     }
+<<<<<<< HEAD
   );
+=======
+  };
+  Transaction.init({
+    description: DataTypes.STRING,
+    amount: DataTypes.FLOAT,
+    userId: DataTypes.INTEGER,
+    categoryId: DataTypes.INTEGER,
+    date: DataTypes.DATE
+  }, {
+    sequelize,
+    paranoid: true,
+    timestamps: true,
+    modelName: 'Transaction',
+  });
+>>>>>>> main
   return Transaction;
 };

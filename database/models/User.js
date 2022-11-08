@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     /*  static associate(models) {
       // define association here
       User.belongsTo(models.Role, {
-        foreignKey:'id',
-        target_key:'roleId'
+        foreignKey: 'id',
+        target_key: 'roleId'
       })
-      User.hasMany(models.Transaction,{
-        foreignKey:'userId'
+      User.hasMany(models.Transaction, {
+        foreignKey: 'userId'
       })
     } */
   }
@@ -31,6 +31,23 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "User",
     }
+<<<<<<< HEAD
   );
+=======
+  };
+  User.init({
+    firstName: DataTypes.STRING,
+    lastname: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
+    avatar: DataTypes.STRING,
+    roleId: DataTypes.INTEGER,
+  }, {
+    sequelize,
+    paranoid: true,
+    timestamps: true,
+    modelName: 'User',
+  });
+>>>>>>> main
   return User;
 };

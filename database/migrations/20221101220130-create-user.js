@@ -27,7 +27,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         /* references: {
           model: 'Roles',
-          key:'id'
+          key: 'id'
         },
         onDelet: 'CASCADE',
         onUpdate: 'CASCADE' */
@@ -38,8 +38,16 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
+<<<<<<< HEAD
         type: Sequelize.DATE,
       },
+=======
+        type: Sequelize.DATE
+      },
+      deletedAt: {
+        type: Sequelize.DATE
+      }
+>>>>>>> main
     });
   },
   down: async (queryInterface, Sequelize) => {
