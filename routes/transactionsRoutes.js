@@ -5,7 +5,7 @@ const {
   createTransaction,
 } = require("../controllers/Transactions/transactionCreateController");
 const {
-  get,
+  listTransactions,
 } = require("../controllers/Transactions/transactionSearchController");
 const {
   getTransactionById,
@@ -20,7 +20,7 @@ const {
 
 router.put("//transactions/:id", updateTransactionById);
 router.post("/transactions", createTransaction);
-router.get("/transactions", get);
+router.get("/transactions", listTransactions);
 router.get("/transactions/:id", getTransactionById);
 router.delete("/transactions/:id", deleteTransaction);
 
