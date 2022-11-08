@@ -1,24 +1,11 @@
-<<<<<<< HEAD
-const { Router } = require("express");
-const {
-  updateTransactionById,
-} = require("../controllers/transactions/transationsUpdateController");
-
-const {
-  crearTransaccion,
-} = require("../controllers/transactions/crearTransacciones");
-
-const router = Router();
-
-router.post("/transactions", crearTransaccion);
-router.put("/transactions/:id", updateTransactionById);
-=======
 const express = require("express");
+
+const router = express.Router();
 const {
   createTransaction,
 } = require("../controllers/Transactions/transactionCreateController");
 const {
-  getAllTransactions,
+  get,
 } = require("../controllers/Transactions/transactionSearchController");
 const {
   getTransactionById,
@@ -27,15 +14,14 @@ const {
 const {
   updateTransactionById,
 } = require("../controllers/Transactions/transationsUpdateController");
-const {deleteTransaction}= require("../controllers/Transactions/transactionsDeleteControllers");
-
-const router = express.Router();
+const {
+  deleteTransaction,
+} = require("../controllers/Transactions/transactionsDeleteControllers");
 
 router.put("//transactions/:id", updateTransactionById);
 router.post("/transactions", createTransaction);
-router.get("/transactions", getAllTransactions);
+router.get("/transactions", get);
 router.get("/transactions/:id", getTransactionById);
-router.delete("/transactions/:id",deleteTransaction);
->>>>>>> main
+router.delete("/transactions/:id", deleteTransaction);
 
 module.exports = router;
