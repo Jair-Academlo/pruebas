@@ -38,16 +38,8 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
-<<<<<<< HEAD
         type: Sequelize.DATE,
       },
-=======
-        type: Sequelize.DATE
-      },
-      deletedAt: {
-        type: Sequelize.DATE
-      }
->>>>>>> main
     });
   },
   down: async (queryInterface, Sequelize) => {
