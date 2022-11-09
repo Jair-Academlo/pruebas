@@ -3,7 +3,6 @@ const { Transaction } = require("../../database/models");
 const { endpointResponse } = require("../../helpers/success");
 const { catchAsync } = require("../../helpers/catchAsync");
 const { ErrorObject } = require("../../helpers/error");
-
 const { Op } = require("sequelize");
 const { paginate } = require("../../database/paginate/paginate");
 
@@ -29,7 +28,7 @@ module.exports = {
 
       if (q) {
         search = {
-          where: { name: { [Op.like]: `%${q}%` } },
+          where: { description: { [Op.like]: `%${q}%` } },
         };
       }
 
