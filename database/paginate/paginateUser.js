@@ -1,37 +1,18 @@
 module.exports = {
-  paginate: async (
-    model,
-    pageSize,
-    pageLimit,
-    search = {},
-    order = [],
-    transform
-  ) => {
+  paginate: async (model, pageSize, pageLimit, search = {}, transform) => {
     try {
       const limit = parseInt(pageLimit, 10) || 10;
       const page = parseInt(pageSize, 10) || 1;
 
-      // create an options object
-      let options = {
-        offset: getOffset(page, limit),
-        limit: limit,
-      };
-
-      // check if the search object is empty
-      if (Object.keys(search).length) {
-        options = { options, ...search };
-      }
-
-      // check if the order array is empty
-      if (order && order.length) {
-        options["order"] = order;
-      }
-
       // take in the model, take in the options
 
-      let { count, rows } = await model.findAndCountAll(options);
+      let { count, rows } = await model.findAndCountAll({
+        attributes: ["firstName", "lastname", "email", "createdAt"],
 
-      console.log(count);
+        offset: getOffset(page, limit),
+        limit: limit,
+        ...search,
+      });
 
       // check if the transform is a function and is not null
       if (transform && typeof transform === "function") {

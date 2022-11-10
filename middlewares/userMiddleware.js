@@ -41,6 +41,7 @@ module.exports = {
       next(httpError);
     }
   }),
+
   protectAccount: catchAsync(async (req, res, next) => {
     try {
       const { sessionUser, user } = req;
@@ -58,17 +59,3 @@ module.exports = {
     }
   }),
 };
-
-/* module.exports = {
-  protectAccount: catchAsync(async (req, res, next) => {
-    try {
-      const { sessionUser, user } = req;
-
-      if (sessionUser.id !== user.id) {
-        return next(new AppError("You do not own this account", 403));
-      }
-    } catch (error) {}
-
-    next();
-  }),
-}; */
